@@ -1,0 +1,29 @@
+<h1>Inventory Dashboard</h1>
+<a href="/add-product/">Add Product</a> | <a href="/sale/">Record Sale</a>
+<h2>Products</h2>
+<table border="1">
+  <tr>
+    <th>Name</th><th>Qty</th><th>Purchase</th><th>Date</th>
+  </tr>
+  {% for product in products %}
+  <tr>
+    <td>{{ product.name }}</td>
+    <td>{{ product.quantity }}</td>
+    <td>{{ product.purchase_price }}</td>
+    <td>{{ product.product_date }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<h2>Sales</h2>
+<table border="1">
+  <tr><th>Product</th><th>Qty Sold</th><th>Selling Price</th><th>Profit</th><th>Date</th></tr>
+  {% for sale in sales %}
+  <tr>
+    <td>{{ sale.product.name }}</td>
+    <td>{{ sale.quantity_sold }}</td>
+    <td>{{ sale.selling_price }}</td>
+    <td>{{ sale.profit }}</td>
+    <td>{{ sale.sale_date }}</td>
+  </tr>
+  {% endfor %}
+</table>

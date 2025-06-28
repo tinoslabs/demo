@@ -1,0 +1,100 @@
+
+{% extends "inventory/base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="page-wrapper">
+  <div class="content">
+    <div class="page-header">
+      <div class="page-title">
+        <h4>Updated Quantity</h4>
+        <h6>Balance Product Quantity</h6>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <form method="GET">
+          <div class="row">
+            <div class="col-lg-4">
+              <input type="text" name="q" placeholder="Search by product or model name" value="{{ query }}" class="form-control">
+            </div>
+            <div class="col-lg-2">
+              <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+          </div>
+        </form>
+
+        {% if results %}
+        <div class="table-responsive mt-4">
+          <table class="table datanew">
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>Model Name</th>
+                <th>Remaining Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for product in results %}
+              <tr>
+                <td>{{ product.name.product_name.name }}</td>
+                <td>{{ product.model_name }}</td>
+                <td>
+                  {% if product.quantity > 0 %}
+                    {{ product.quantity }}
+                  {% else %}
+                    <span style="color:red">Out of Stock</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% elif query %}
+          <p class="mt-4">No products found matching "{{ query }}".</p>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% comment %} <h1>Search Product Stock</h1>
+<form method="GET">
+    <input type="text" name="q" placeholder="Search by product or model name" value="{{ query }}">
+    <button type="submit">Search</button>
+</form>
+
+{% if results %}
+<table border="1">
+  <thead>
+    <tr>
+      <th>Product Name</th>
+      <th>Model Name</th>
+      <th>Remaining Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in results %}
+    <tr>
+      <td>{{ product.name.product_name.name }}</td>
+      <td>{{ product.model_name }}</td>
+      <td>
+        {% if product.quantity > 0 %}
+          {{ product.quantity }}
+        {% else %}
+          <span style="color:red">Out of Stock</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% elif query %}
+  <p>No products found matching "{{ query }}".</p>
+{% endif %}
+""" {% endcomment %}

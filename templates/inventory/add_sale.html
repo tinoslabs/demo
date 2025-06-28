@@ -1,0 +1,83 @@
+
+{% extends "inventory/base.html" %}
+{% load static %}
+{% block content %}
+
+<form method="POST" action="">
+    {% csrf_token %}
+    <div class="page-wrapper">
+        <div class="content">
+            <div class="page-header">
+                <div class="page-title">
+                    <h4>Add Sales</h4>
+                    <h6>Create new Sales</h6>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+
+                        <!-- Product Name (ForeignKey to Product) -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Product Name</label>
+                                <select name="product" class="form-control" required>
+                                    <option value="" disabled selected>Select Product</option>
+                                    {% for product in products %}
+                                        <option value="{{ product.id }}">
+                                            {{ product.name.product_name.name }} - {{ product.model_name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                {% if form.errors.product %}
+                                    <small class="text-danger">{{ form.errors.product.0 }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Quantity Sold -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Quantity Sold</label>
+                                <input type="number" name="quantity_sold" class="form-control" required>
+                                {% if form.errors.quantity_sold %}
+                                    <small class="text-danger">{{ form.errors.quantity_sold.0 }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Selling Price -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Selling Price</label>
+                                <input type="number" name="selling_price" step="0.01" class="form-control" required>
+                                {% if form.errors.selling_price %}
+                                    <small class="text-danger">{{ form.errors.selling_price.0 }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Note: sale_date is auto_now_add, so no input for date -->
+
+                        <!-- Submit Button -->
+                        <div class="col-lg-12 mt-3">
+                            <button type="submit" class="btn btn-submit me-2">Submit</button>
+                            <a href="{% url 'display_sales' %}" class="btn btn-cancel">Cancel</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
+
+{% comment %} <h1>Record Sale</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Record</button>
+</form> {% endcomment %}

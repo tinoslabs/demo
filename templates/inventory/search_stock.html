@@ -1,0 +1,38 @@
+"""
+<h1>Search Product Stock</h1>
+<form method="get" action="">
+    <input type="text" name="q" placeholder="Enter model name" value="{{ query }}">
+    <button type="submit">Search</button>
+</form>
+
+{% if query %}
+    {% if products %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Model Name</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.name.product_name.name }}</td>
+                    <td>{{ product.model_name }}</td>
+                    <td>
+                        {% if product.quantity > 0 %}
+                            {{ product.quantity }}
+                        {% else %}
+                            <span style="color: red;">Out of Stock</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="color: red;">{{ message }}</p>
+    {% endif %}
+{% endif %}
+"""

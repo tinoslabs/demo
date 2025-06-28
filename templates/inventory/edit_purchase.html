@@ -1,0 +1,101 @@
+{% extends "inventory/base.html" %}
+{% load static %}
+{% block content %}
+
+<form method="POST" action="">
+    {% csrf_token %}
+    <div class="page-wrapper">
+        <div class="content">
+
+            <div class="page-header">
+                <div class="page-title">
+                    <h4>Edit Purchase</h4>
+                    <h6>Update purchase information</h6>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+
+                        <!-- Product Name -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Product Name</label>
+                                <select name="product_name" class="form-control" required>
+                                    <option value="" disabled>Select Product</option>
+                                    {% for category in categories %}
+                                        <option value="{{ category.id }}"
+                                            {% if purchase.product_name.id == category.id %}selected{% endif %}>
+                                            {{ category.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                {% if form.errors.product_name %}
+                                    <small class="text-danger">{{ form.errors.product_name.0 }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Model Name -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Model Name</label>
+                                <input type="text" name="model_name" class="form-control"
+                                       value="{{ purchase.model_name }}" required>
+                                {% if form.errors.model_name %}
+                                    <small class="text-danger">{{ form.errors.model_name.0 }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Quantity -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="number" name="quantity" class="form-control"
+                                       value="{{ purchase.quantity }}" required>
+                                {% if form.errors.quantity %}
+                                    <small class="text-danger">{{ form.errors.quantity.0 }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Purchase Price -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input type="number" name="purchase_price" step="0.01" class="form-control"
+                                       value="{{ purchase.purchase_price }}" required>
+                                {% if form.errors.purchase_price %}
+                                    <small class="text-danger">{{ form.errors.purchase_price.0 }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Purchase Date -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Purchase Date</label>
+                                <input type="date" name="purchase_date" class="form-control"
+                                       value="{{ purchase.purchase_date|date:'Y-m-d' }}" required>
+                                {% if form.errors.purchase_date %}
+                                    <small class="text-danger">{{ form.errors.purchase_date.0 }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Submit / Cancel -->
+                        <div class="col-lg-12 mt-3">
+                            <button type="submit" class="btn btn-submit me-2">Update</button>
+                            <a href="{% url 'display_purchases' %}" class="btn btn-cancel">Cancel</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

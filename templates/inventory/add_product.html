@@ -1,0 +1,126 @@
+{% extends "inventory/base.html" %}
+{% load static %}
+{% block content %}
+
+<form method="POST" action="">
+    {% csrf_token %}
+    <div class="page-wrapper">
+        <div class="content">
+
+            <div class="page-header">
+                <div class="page-title">
+                    <h4>Product Add</h4>
+                    <h6>Create new product</h6>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+
+                        <!-- Product Name (ForeignKey to Purchase) -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Product Name</label>
+                                <select name="name" class="form-control" required>
+                                    <option value="" disabled selected>Select Product</option>
+                                    {% for purchase in purchases %}
+                                        <option value="{{ purchase.id }}">
+                                            {{ purchase.product_name.name }} - {{ purchase.model_name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                {% if form.errors.name %}
+                                    <small class="text-danger">{{ form.errors.name.0 }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Model Name -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Model Name</label>
+                                <input type="text" name="model_name" class="form-control" required>
+                                {% if form.errors.model_name %}
+                                    <small class="text-danger">{{ form.errors.model_name.0 }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Model Number -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Model Number</label>
+                                <input type="text" name="model_number" class="form-control" required>
+                                {% if form.errors.model_number %}
+                                    <small class="text-danger">{{ form.errors.model_number.0 }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Barcode -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Barcode</label>
+                                <input type="text" name="barcode" class="form-control">
+                                {% if form.errors.barcode %}
+                                    <small class="text-danger">{{ form.errors.barcode.0 }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Quantity -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="number" name="quantity" class="form-control" required>
+                                {% if form.errors.quantity %}
+                                    <small class="text-danger">{{ form.errors.quantity.0 }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input type="number" name="product_price" step="0.01" class="form-control" required>
+                                {% if form.errors.product_price %}
+                                    <small class="text-danger">{{ form.errors.product_price.0 }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Product Date -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="date" name="product_date" class="form-control" required>
+                                {% if form.errors.product_date %}
+                                    <small class="text-danger">{{ form.errors.product_date.0 }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Submit / Cancel -->
+                        <div class="col-lg-12 mt-3">
+                            <button type="submit" class="btn btn-submit me-2">Submit</button>
+                            <a href="{% url 'display_products' %}" class="btn btn-cancel">Cancel</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}
+{% comment %} <h1>Add Product</h1>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Add Product</button>
+</form> {% endcomment %}
+
