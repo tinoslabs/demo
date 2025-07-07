@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect
-from .models import Product, Sale, Purchase, ProductCategory
-from .forms import ProductForm, SaleForm, PurchaseForm, ProductCategoryForm
+from .models import Product, Sale
+from .forms import ProductForm, SaleForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -58,8 +58,7 @@ def edit_category(request, pk):
     return render(request, 'inventory/edit_category.html', {'form': form, 'category': category})
 
 
-def delete_category(request, pk):
-    
+def delete_category(request, pk):  
     category = get_object_or_404(ProductCategory, pk=pk)
     category.delete()
     return redirect('display_categories')
@@ -69,9 +68,15 @@ def display_products(request):
     products = Product.objects.all()
     return render(request, 'inventory/display_product.html', {'products': products})
 
+
+
 def display_sales(request):
-    sales = Sale.objects.all()
-    return render(request, 'inventory/display_sales.html', {'sales': sales})
+    sales = Sale.objects.select_related('product').all().order_by('-sale_date')
+    total_profit = sales.aggregate(total=Sum('profit'))['total'] or 0
+    return render(request, 'inventory/display_sales.html', {
+        'sales': sales,
+        'total_profit': total_profit
+    })
 
 
 def display_purchases(request):
@@ -81,26 +86,19 @@ def display_purchases(request):
 
 def add_product(request):
     form = ProductForm(request.POST or None)
-    purchases = Purchase.objects.select_related('product_name').all()
     if form.is_valid():
         form.save()
-        return redirect('display_products')
-    return render(request, 'inventory/add_product.html', {
-        'form': form,
-        'purchases': purchases
-    })
+        return redirect('display_products')  # Make sure this route is defined in urls.py
+    return render(request, 'inventory/add_product.html', {'form': form})
 
 
 def make_sale(request):
     form = SaleForm(request.POST or None)
-    products = Product.objects.select_related('name__product_name').all()
+    products = Product.objects.all()
     if form.is_valid():
         form.save()
         return redirect('display_sales')
-    return render(request, 'inventory/add_sale.html', {
-        'form': form,
-        'products': products
-    })
+    return render(request, 'inventory/add_sale.html', {'form': form, 'products': products})
 
 
 def add_purchase(request):
@@ -135,22 +133,46 @@ def delete_purchase(request, pk):
     return redirect('display_purchases')
     
 
+# from django.db.models import Q
+
+# def search_product_stock(request):
+#     query = request.GET.get('q')
+#     results = []
+#     if query:
+#         results = Product.objects.filter(
+#             Q(product_code__icontains=query)
+#         )
+#     return render(request, 'inventory/search_product_stock.html', {
+#         'query': query,
+#         'results': results
+#     })
+
+
+# from django.http import JsonResponse
+
+# def product_autocomplete(request):
+#     term = request.GET.get('term', '')
+#     product_codes = Product.objects.filter(product_code__icontains=term).values_list('product_code', flat=True).distinct()[:10]
+#     return JsonResponse(list(product_codes), safe=False)
 
 from django.db.models import Q
+from django.http import JsonResponse
+from .models import Product
 
 def search_product_stock(request):
     query = request.GET.get('q')
     results = []
     if query:
-        results = Product.objects.filter(
-            Q(name__product_name__name__icontains=query) |
-            Q(model_name__icontains=query)
-        )
+        results = Product.objects.filter(Q(product_code__icontains=query))
     return render(request, 'inventory/search_product_stock.html', {
         'query': query,
         'results': results
     })
 
+def product_autocomplete(request):
+    term = request.GET.get('term', '')
+    product_codes = Product.objects.filter(product_code__icontains=term).values_list('product_code', flat=True).distinct()[:10]
+    return JsonResponse(list(product_codes), safe=False)
 
 def display_balance_stock(request):
     from django.db.models import Sum
@@ -180,9 +202,18 @@ def edit_product(request, pk):
     })
 
 
+from django.db.models import Sum
+
+def display_total_profit(request):
+    total_profit = Sale.objects.aggregate(total=Sum('profit'))['total'] or 0
+    sales = Sale.objects.select_related('product').all().order_by('-sale_date')
+    return render(request, 'inventory/display_total_profit.html', {
+        'sales': sales,
+        'total_profit': total_profit
+    })
+
 def delete_product(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    
+    product = get_object_or_404(Product, pk=pk)    
     product.delete()
     return redirect('display_products')
     

@@ -1,9 +1,32 @@
 """
+<style>
+.autocomplete-box {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    width: 200px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.autocomplete-box div {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.autocomplete-box div:hover {
+    background-color: #f0f0f0;
+}
+</style>
+
 <h1>Search Product Stock</h1>
 <form method="get" action="">
-    <input type="text" name="q" placeholder="Enter model name" value="{{ query }}">
+    <input type="text" id="search-input" name="q" placeholder="Enter product code" value="{{ query }}" autocomplete="off">
+    <div id="suggestion-box" class="autocomplete-box"></div>
     <button type="submit">Search</button>
 </form>
+
 
 {% if query %}
     {% if products %}
@@ -35,4 +58,40 @@
         <p style="color: red;">{{ message }}</p>
     {% endif %}
 {% endif %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const input = document.getElementById('search-input');
+    const box = document.getElementById('suggestion-box');
+
+    input.addEventListener('keyup', function () {
+        const query = this.value;
+        if (query.length > 1) {
+            fetch(`/autocomplete/?term=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    box.innerHTML = '';
+                    data.forEach(function (item) {
+                        const div = document.createElement('div');
+                        div.textContent = item;
+                        div.addEventListener('click', function () {
+                            input.value = this.textContent;
+                            box.innerHTML = '';
+                        });
+                        box.appendChild(div);
+                    });
+                });
+        } else {
+            box.innerHTML = '';
+        }
+    });
+
+    document.addEventListener('click', function (e) {
+        if (e.target !== input) {
+            box.innerHTML = '';
+        }
+    });
+});
+</script>
+
 """

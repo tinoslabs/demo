@@ -3,6 +3,30 @@
 {% load static %}
 {% block content %}
 
+<style>
+.autocomplete-box {
+  position: absolute;
+  top: 100%;
+  left: 15px;
+  right: 15px;
+  background: #fff;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  max-height: 150px;
+  overflow-y: auto;
+  border-radius: 4px;
+}
+
+.autocomplete-box div {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.autocomplete-box div:hover {
+  background-color: #f0f0f0;
+}
+</style>
+
 
 <div class="page-wrapper">
   <div class="content">
@@ -24,23 +48,32 @@
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
           </div>
-        </form>
+        </form> 
+        {% comment %} <form method="GET" action="">
+        <div class="row position-relative">
+          <div class="col-lg-4">
+            <input type="text" name="q" id="search-input" placeholder="Search by product code" value="{{ query }}" class="form-control" autocomplete="off">
+            <div id="suggestion-box" class="autocomplete-box"></div>
+          </div>
+          <div class="col-lg-2">
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
+        </div>
+      </form> {% endcomment %}
 
         {% if results %}
         <div class="table-responsive mt-4">
           <table class="table datanew">
             <thead>
               <tr>
-                <th>Product Name</th>
-                <th>Model Name</th>
+                <th>Product Code</th>
                 <th>Remaining Quantity</th>
               </tr>
             </thead>
             <tbody>
               {% for product in results %}
               <tr>
-                <td>{{ product.name.product_name.name }}</td>
-                <td>{{ product.model_name }}</td>
+                <td>{{ product.product_code }}</td>
                 <td>
                   {% if product.quantity > 0 %}
                     {{ product.quantity }}
@@ -53,6 +86,7 @@
             </tbody>
           </table>
         </div>
+
         {% elif query %}
           <p class="mt-4">No products found matching "{{ query }}".</p>
         {% endif %}
@@ -62,39 +96,41 @@
   </div>
 </div>
 {% endblock %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const input = document.getElementById('search-input');
+  const box = document.getElementById('suggestion-box');
 
-{% comment %} <h1>Search Product Stock</h1>
-<form method="GET">
-    <input type="text" name="q" placeholder="Search by product or model name" value="{{ query }}">
-    <button type="submit">Search</button>
-</form>
+  input.addEventListener('input', function () {
+    const query = this.value;
+    if (query.length >= 2) {
+      fetch(`/autocomplete/?term=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+          box.innerHTML = '';
+          if (data.length > 0) {
+            data.forEach(item => {
+              const div = document.createElement('div');
+              div.textContent = item;
+              div.addEventListener('click', () => {
+                input.value = item;
+                box.innerHTML = '';
+              });
+              box.appendChild(div);
+            });
+          } else {
+            box.innerHTML = '<div>No match found</div>';
+          }
+        });
+    } else {
+      box.innerHTML = '';
+    }
+  });
 
-{% if results %}
-<table border="1">
-  <thead>
-    <tr>
-      <th>Product Name</th>
-      <th>Model Name</th>
-      <th>Remaining Quantity</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for product in results %}
-    <tr>
-      <td>{{ product.name.product_name.name }}</td>
-      <td>{{ product.model_name }}</td>
-      <td>
-        {% if product.quantity > 0 %}
-          {{ product.quantity }}
-        {% else %}
-          <span style="color:red">Out of Stock</span>
-        {% endif %}
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% elif query %}
-  <p>No products found matching "{{ query }}".</p>
-{% endif %}
-""" {% endcomment %}
+  document.addEventListener('click', function (event) {
+    if (!box.contains(event.target) && event.target !== input) {
+      box.innerHTML = '';
+    }
+  });
+});
+</script>

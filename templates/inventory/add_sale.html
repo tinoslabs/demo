@@ -3,6 +3,8 @@
 {% load static %}
 {% block content %}
 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 <form method="POST" action="">
     {% csrf_token %}
     <div class="page-wrapper">
@@ -10,7 +12,7 @@
             <div class="page-header">
                 <div class="page-title">
                     <h4>Add Sales</h4>
-                    <h6>Create new Sales</h6>
+                    <h6>Create new Sale</h6>
                 </div>
             </div>
 
@@ -18,15 +20,15 @@
                 <div class="card-body">
                     <div class="row">
 
-                        <!-- Product Name (ForeignKey to Product) -->
-                        <div class="col-lg-3 col-sm-6 col-12">
+                        <!-- Product Code Dropdown -->
+                        {% comment %} <div class="col-lg-3 col-sm-6 col-12">
                             <div class="form-group">
-                                <label>Product Name</label>
+                                <label>Product</label>
                                 <select name="product" class="form-control" required>
                                     <option value="" disabled selected>Select Product</option>
                                     {% for product in products %}
                                         <option value="{{ product.id }}">
-                                            {{ product.name.product_name.name }} - {{ product.model_name }}
+                                            {{ product.product_code }}
                                         </option>
                                     {% endfor %}
                                 </select>
@@ -34,7 +36,26 @@
                                     <small class="text-danger">{{ form.errors.product.0 }}</small>
                                 {% endif %}
                             </div>
+                        </div> {% endcomment %}
+
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Product</label>
+                               <select name="product" id="product-select" class="form-control" required>
+                                    <option value="" disabled selected>Select Product</option>
+                                    {% for product in products %}
+                                        <option value="{{ product.id }}">
+                                        {{ product.product_code }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                
+                                {% if form.errors.product %}
+                                <small class="text-danger">{{ form.errors.product.0 }}</small>
+                                {% endif %}
+                            </div>
                         </div>
+
 
                         <!-- Quantity Sold -->
                         <div class="col-lg-3 col-sm-6 col-12">
@@ -58,8 +79,6 @@
                             </div>
                         </div>
 
-                        <!-- Note: sale_date is auto_now_add, so no input for date -->
-
                         <!-- Submit Button -->
                         <div class="col-lg-12 mt-3">
                             <button type="submit" class="btn btn-submit me-2">Submit</button>
@@ -72,6 +91,23 @@
         </div>
     </div>
 </form>
+
+
+ <script>
+  $(document).ready(function() {
+    $('#product-select').select2({
+      placeholder: "Search by Product Code",
+      allowClear: true
+    });
+  });
+</script>
+
+
+<!-- jQuery (required for Select2) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 {% endblock %}
 

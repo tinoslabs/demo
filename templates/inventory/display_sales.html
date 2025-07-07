@@ -104,7 +104,13 @@
 </div>
 
 
+
 <div class="table-responsive">
+  <!-- Total Profit -->
+  <div class="mb-3">
+    <h5>Total Profit: <span class="text-success">₹{{ total_profit }}</span></h5>
+  </div>
+
   <table class="table datanew">
     <thead>
       <tr>
@@ -114,8 +120,7 @@
             <span class="checkmarks"></span>
           </label>
         </th>
-        <th>Product Name</th>
-        <th>Model Name</th>
+        <th>Product Code</th>
         <th>Quantity Sold</th>
         <th>Selling Price</th>
         <th>Profit</th>
@@ -132,14 +137,12 @@
             <span class="checkmarks"></span>
           </label>
         </td>
-        <td>{{ sale.product.name.product_name.name }}</td>
-        <td>{{ sale.product.model_name }}</td>
+        <td>{{ sale.product.product_code }}</td>
         <td>{{ sale.quantity_sold }}</td>
         <td>{{ sale.selling_price }}</td>
         <td>{{ sale.profit }}</td>
-        <td>{{ sale.sale_date }}</td>
+        <td>{{ sale.sale_date|date:"Y-m-d H:i" }}</td>
         <td>
-          
           <a class="me-3" href="">
             <img src="{% static 'assets/img/icons/edit.svg' %}" alt="edit">
           </a>
@@ -150,12 +153,14 @@
       </tr>
       {% empty %}
       <tr>
-        <td colspan="10" class="text-center">No products available.</td>
+        <td colspan="7" class="text-center">No sales available.</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
+
+
 
 
 

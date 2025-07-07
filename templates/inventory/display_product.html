@@ -113,10 +113,7 @@
             <span class="checkmarks"></span>
           </label>
         </th>
-        <th>Product Name</th>
-        <th>Model Name</th>
-        <th>Model Number</th>
-        <th>Barcode</th>
+        <th>Product Code</th>
         <th>Product Price</th>
         <th>Quantity</th>
         <th>Product Date</th>
@@ -133,16 +130,12 @@
             <span class="checkmarks"></span>
           </label>
         </td>
-        <td>{{ product.name.product_name.name }}</td>
-        <td>{{ product.model_name }}</td>
-        <td>{{ product.model_number }}</td>
-        <td>{{ product.barcode|default:"N/A" }}</td>
+        <td>{{ product.product_code }}</td>
         <td>{{ product.product_price }}</td>
         <td>{{ product.quantity }}</td>
         <td>{{ product.product_date }}</td>
         <td>{{ product.added_on|date:"Y-m-d H:i" }}</td>
         <td>
-          
           <a class="me-3" href="{% url 'edit_product' product.id %}">
             <img src="{% static 'assets/img/icons/edit.svg' %}" alt="edit">
           </a>
@@ -153,12 +146,13 @@
       </tr>
       {% empty %}
       <tr>
-        <td colspan="10" class="text-center">No products available.</td>
+        <td colspan="7" class="text-center">No products available.</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
+
 
 
 

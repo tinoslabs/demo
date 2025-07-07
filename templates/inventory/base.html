@@ -10,6 +10,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Dreams Pos admin template</title>
 
+
 <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.jpg' %}">
 
 <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
@@ -226,19 +227,11 @@
 <a href=""><img src="{% static 'assets/img/icons/dashboard.svg' %}" alt="img"><span> Dashboard</span> </a>
 </li>
 <li class="submenu">
-<a href="javascript:void(0);"><img src="{% static 'assets/img/icons/product.svg' %}" alt="img"><span> Product</span> <span class="menu-arrow"></span></a>
+<a href="javascript:void(0);"><img src="{% static 'assets/img/icons/product.svg' %}" alt="img"><span> Purchase</span> <span class="menu-arrow"></span></a>
 <ul>
 <li><a href="{% url 'add_product' %}">Add Product</a></li>
 <li><a href="{% url 'display_products' %}">Product List</a></li>
-<li><a href="{% url 'add_category' %}">Add Category</a></li>
-<li><a href="{% url 'display_categories' %}">Category List</a></li>
 
-{% comment %} <li><a href="subcategorylist.html">Sub Category List</a></li>
-<li><a href="subaddcategory.html">Add Sub Category</a></li>
-<li><a href="brandlist.html">Brand List</a></li>
-<li><a href="addbrand.html">Add Brand</a></li>
-<li><a href="importproduct.html">Import Products</a></li>
-<li><a href="barcode.html">Print Barcode</a></li> {% endcomment %}
 
 </ul>
 </li>
@@ -264,42 +257,7 @@
 </ul>
 </li>
 
-<li class="submenu">
-<a href="javascript:void(0);"><img src="{% static 'assets/img/icons/purchase1.svg' %}" alt="img"><span> Purchase</span> <span class="menu-arrow"></span></a>
-<ul>
-<li><a href="{% url 'display_purchases' %}">Purchase List</a></li>
-<li><a href="{% url 'add_purchase' %}">Add Purchase</a></li>
-</ul>
-</li>
 
-<li class="submenu">
-<a href="javascript:void(0);"><img src="{% static 'assets/img/icons/expense1.svg' %}" alt="img"><span> Expense</span> <span class="menu-arrow"></span></a>
-<ul>
-<li><a href="">Expense List</a></li>
-<li><a href="">Add Expense</a></li>
-<li><a href="">Expense Category</a></li>
-</ul>
-</li>
-<li class="submenu">
-<a href="javascript:void(0);"><img src="{% static 'assets/img/icons/quotation1.svg' %}" alt="img"><span> Quotation</span> <span class="menu-arrow"></span></a>
-<ul>
-<li><a href="">Quotation List</a></li>
- <li><a href="">Add Quotation</a></li>
-</ul>
-</li>
-
-<li class="submenu">
-<a href="javascript:void(0);"><img src="{% static 'assets/img/icons/settings.svg' %}" alt="img"><span> Settings</span> <span class="menu-arrow"></span></a>
-<ul>
-<li><a href="">General Settings</a></li>
-<li><a href="">Email Settings</a></li>
- <li><a href="">Payment Settings</a></li>
-<li><a href="">Currency Settings</a></li>
-<li><a href="">Group Permissions</a></li>
-<li><a href="">Tax Rates</a></li>
-</ul>
-</li>
-</ul>
 </div>
 </div>
 </div>

@@ -1,0 +1,54 @@
+
+{% extends "inventory/base.html" %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+  <div class="content">
+    <div class="page-header">
+      <div class="page-title">
+        <h4>Sales Profit</h4>
+        <h6>Total Profit Summary</h6>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="mb-3">
+          <h5>Total Profit: <span class="text-success">₹{{ total_profit }}</span></h5>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table datanew">
+            <thead>
+              <tr>
+                <th>Product Code</th>
+                <th>Quantity Sold</th>
+                <th>Selling Price</th>
+                <th>Profit</th>
+                <th>Sale Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for sale in sales %}
+              <tr>
+                <td>{{ sale.product.product_code }}</td>
+                <td>{{ sale.quantity_sold }}</td>
+                <td>{{ sale.selling_price }}</td>
+                <td>{{ sale.profit }}</td>
+                <td>{{ sale.sale_date|date:"Y-m-d H:i" }}</td>
+              </tr>
+              {% endfor %}
+              {% if not sales %}
+              <tr>
+                <td colspan="5" class="text-center">No sales available.</td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

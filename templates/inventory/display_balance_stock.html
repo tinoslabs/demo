@@ -113,14 +113,13 @@
             <span class="checkmarks"></span>
           </label>
         </th>
-        <th>Product Name</th>
-        <th>Model Name</th>
+        <th>Product Code</th>
         <th>Remaining Quantity</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
-       {% for product in products %}
+      {% for product in products %}
       <tr>
         <td>
           <label class="checkboxs">
@@ -128,27 +127,26 @@
             <span class="checkmarks"></span>
           </label>
         </td>
-        <td>{{ product.name.product_name.name }}</td>
-        <td>{{ product.model_name }}</td>
+        <td>{{ product.product_code }}</td>
         <td>{{ product.quantity }}</td>
         <td>
-          
-          <a class="me-3" href="">
+          <a class="me-3" href="{% url 'edit_product' product.id %}">
             <img src="{% static 'assets/img/icons/edit.svg' %}" alt="edit">
           </a>
-          <a class="confirm-text" href="">
+          <a class="confirm-text" href="{% url 'delete_product' product.id %}">
             <img src="{% static 'assets/img/icons/delete.svg' %}" alt="delete">
           </a>
         </td>
       </tr>
       {% empty %}
       <tr>
-        <td colspan="10" class="text-center">No products available.</td>
+        <td colspan="4" class="text-center">No products available.</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
+
 
 
 

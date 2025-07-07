@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-<form method="POST" action="">
+<form method="POST">
     {% csrf_token %}
     <div class="page-wrapper">
         <div class="content">
@@ -18,53 +18,13 @@
                 <div class="card-body">
                     <div class="row">
 
-                        <!-- Product Name (ForeignKey to Purchase) -->
+                        <!-- Product Code -->
                         <div class="col-lg-3 col-sm-6 col-12">
                             <div class="form-group">
-                                <label>Product Name</label>
-                                <select name="name" class="form-control" required>
-                                    <option value="" disabled selected>Select Product</option>
-                                    {% for purchase in purchases %}
-                                        <option value="{{ purchase.id }}">
-                                            {{ purchase.product_name.name }} - {{ purchase.model_name }}
-                                        </option>
-                                    {% endfor %}
-                                </select>
-                                {% if form.errors.name %}
-                                    <small class="text-danger">{{ form.errors.name.0 }}</small>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <!-- Model Name -->
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label>Model Name</label>
-                                <input type="text" name="model_name" class="form-control" required>
-                                {% if form.errors.model_name %}
-                                    <small class="text-danger">{{ form.errors.model_name.0 }}</small>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <!-- Model Number -->
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label>Model Number</label>
-                                <input type="text" name="model_number" class="form-control" required>
-                                {% if form.errors.model_number %}
-                                    <small class="text-danger">{{ form.errors.model_number.0 }}</small>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <!-- Barcode -->
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label>Barcode</label>
-                                <input type="text" name="barcode" class="form-control">
-                                {% if form.errors.barcode %}
-                                    <small class="text-danger">{{ form.errors.barcode.0 }}</small>
+                                <label>Product Code</label>
+                                <input type="text" name="product_code" class="form-control" required>
+                                {% if form.errors.product_code %}
+                                    <small class="text-danger">{{ form.errors.product_code.0 }}</small>
                                 {% endif %}
                             </div>
                         </div>
@@ -80,10 +40,10 @@
                             </div>
                         </div>
 
-                        <!-- Price -->
+                        <!-- Product Price -->
                         <div class="col-lg-3 col-sm-6 col-12">
                             <div class="form-group">
-                                <label>Price</label>
+                                <label>Product Price</label>
                                 <input type="number" name="product_price" step="0.01" class="form-control" required>
                                 {% if form.errors.product_price %}
                                     <small class="text-danger">{{ form.errors.product_price.0 }}</small>
@@ -114,6 +74,7 @@
         </div>
     </div>
 </form>
+
 
 
 {% endblock %}

@@ -22,6 +22,7 @@ urlpatterns = [
     path('display-sales/', views.display_sales, name='display_sales'),
     
     path('search-stock/', views.search_product_stock, name='search_stock'),
+    path('autocomplete/', views.product_autocomplete, name='product_autocomplete'),
     path('', views.index, name='index'),
    
     path('add_pro',views.add_pro, name='add_pro'),
@@ -37,5 +38,7 @@ urlpatterns = [
     path('brandlist/', views.brandlist, name='brandlist'),
     
     path('balance-stock/', views.display_balance_stock, name='display_balance_stock'),
+    
+    path('display-total-profit/', views.display_total_profit, name='display_total_profit'),
     
 ]
