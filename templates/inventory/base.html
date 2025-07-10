@@ -8,7 +8,7 @@
 <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
 <meta name="author" content="Dreamguys - Bootstrap Admin Template">
 <meta name="robots" content="noindex, nofollow">
-<title>Dreams Pos admin template</title>
+<title>I Cart</title>
 
 
 <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.jpg' %}">
@@ -197,8 +197,7 @@
 </div>
 </div>
 <hr class="m-0">
-<a class="dropdown-item" href="profile.html"> <i class="me-2" data-feather="user"></i> My Profile</a>
-<a class="dropdown-item" href="generalsettings.html"><i class="me-2" data-feather="settings"></i>Settings</a>
+
 <hr class="m-0">
 <a class="dropdown-item logout pb-0" href="{% url 'logout_user' %}"><img src="{% static 'assets/img/icons/log-out.svg' %}" class="me-2" alt="img">Logout</a>
 </div>
@@ -210,8 +209,7 @@
 <div class="dropdown mobile-user-menu">
 <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
 <div class="dropdown-menu dropdown-menu-right">
-<a class="dropdown-item" href="profile.html">My Profile</a>
-<a class="dropdown-item" href="generalsettings.html">Settings</a>
+
 <a class="dropdown-item" href="{% url 'logout_user' %}">Logout</a>
 </div>
 </div>
@@ -247,8 +245,16 @@
 <li class="submenu">
 <a href="javascript:void(0);"><img src="{% static 'assets/img/icons/sales1.svg' %}" alt="img"><span>Extra Sales</span> <span class="menu-arrow"></span></a>
 <ul>
-<li><a href="{% url 'add_sale' %}">Add Extra Sales</a></li>
+<li><a href="{% url 'add_extra_sale' %}">Add Extra Sales</a></li>
 <li><a href="{% url 'display_extra_profit' %}">Display Extra Sales</a></li>
+</ul>
+</li>
+
+<li class="submenu">
+<a href="javascript:void(0);"><img src="{% static 'assets/img/icons/sales1.svg' %}" alt="img"><span>Expense</span> <span class="menu-arrow"></span></a>
+<ul>
+<li><a href="{% url 'add_expense' %}">Add Expense</a></li>
+<li><a href="{% url 'display_expense' %}">Display Expense</a></li>
 </ul>
 </li>
 

@@ -27,6 +27,10 @@ urlpatterns = [
     path('edit_sale/<int:pk>/', views.edit_sale, name='edit_sale'),
     path('delete_sale/<int:pk>/', views.delete_sale, name='delete_sale'),
 
+    path('add_expense/', views.add_expense, name='add_expense'),
+    path('display_expense/', views.display_expense, name='display_expense'),
+    path('edit_expense/<int:id>/', views.edit_expense, name='edit_expense'),
+    path('delete_expense/<int:pk>/', views.delete_expense, name='delete_expense'),
     
     path('edit_extra_sale/<int:pk>/', views.edit_extra_sale, name='edit_extra_sale'),
     path('delete_extra_sale/<int:pk>/', views.delete_extra_sale, name='delete_extra_sale'),

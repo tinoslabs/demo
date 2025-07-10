@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product, Sale, ExtraSale
+from .models import Product, Sale, ExtraSale, Expense
 
 
 
@@ -23,6 +23,12 @@ class ExtraSaleForm(forms.ModelForm):
     class Meta:
         model = ExtraSale
         fields = ['product', 'quantity_sold', 'price', 'selling_price']
+        
+        
+class ExpenseForm(forms.ModelForm):
+    class Meta:
+        model = Expense
+        fields = ['expense', 'expense_rate']
 
 # class SaleForm(forms.ModelForm):
 #     class Meta:

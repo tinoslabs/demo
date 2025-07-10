@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect
-from .models import Product, Sale, ExtraSale
-from .forms import ProductForm, SaleForm, ExtraSaleForm
+from .models import Product, Sale, ExtraSale, Expense
+from .forms import ProductForm, SaleForm, ExtraSaleForm, ExpenseForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -200,6 +200,37 @@ def display_extra_profit(request):
         'total_profit': total_profit
     })
 
+
+def add_expense(request):
+    form = ExpenseForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('display_expense')
+    return render(request, 'inventory/add_expense.html', {'form': form})
+
+
+def display_expense(request):
+    expenses = Expense.objects.all()
+    total_expense = expenses.aggregate(total=Sum('expense_rate'))['total'] or 0
+    return render(request, 'inventory/display_expense.html', {
+        'expenses': expenses,
+        'total_expense': total_expense
+    })
+
+
+def edit_expense(request, id):
+    expense = get_object_or_404(Expense, id=id)
+    form = ExpenseForm(request.POST or None, instance=expense)
+    if form.is_valid():
+        form.save()
+        return redirect('display_expense')
+    return render(request, 'inventory/edit_expense.html', {'form': form, 'expense': expense})
+
+
+def delete_expense(request, pk):
+    expense = get_object_or_404(Expense, pk=pk)
+    expense.delete()
+    return redirect('display_expense')
     
 
 def index(request):
