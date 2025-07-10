@@ -5,10 +5,7 @@ urlpatterns = [
     
     path('dashboard', views.dashboard, name='dashboard'),
     
-    path('add-category/', views.add_category, name='add_category'),
-    path('display-categories/', views.display_categories, name='display_categories'),
-    path('edit-category/<int:pk>/', views.edit_category, name='edit_category'),
-    path('delete-category/<int:pk>/', views.delete_category, name='delete_category'),
+
     
     path('user_login', views.user_login, name='user_login'),
     path('logout_user', views.logout_user, name='logout_user'),
@@ -26,11 +23,17 @@ urlpatterns = [
     path('', views.index, name='index'),
    
     path('add_pro',views.add_pro, name='add_pro'),
-    path('add-purchase/', views.add_purchase, name='add_purchase'),
-    path('edit-purchase/<int:pk>/', views.edit_purchase, name='edit_purchase'),
-    path('delete-purchase/<int:pk>/', views.delete_purchase, name='delete_purchase'),
     
-    path('display-purchases/', views.display_purchases, name='display_purchases'),
+    path('edit_sale/<int:pk>/', views.edit_sale, name='edit_sale'),
+    path('delete_sale/<int:pk>/', views.delete_sale, name='delete_sale'),
+
+    
+    path('edit_extra_sale/<int:pk>/', views.edit_extra_sale, name='edit_extra_sale'),
+    path('delete_extra_sale/<int:pk>/', views.delete_extra_sale, name='delete_extra_sale'),
+    
+    path('add_extra_sale/', views.add_extra_sale, name='add_extra_sale'),
+    path('display_extra_profit', views.display_extra_profit, name='display_extra_profit'),
+
     path('add_pur', views.add_pur, name='add_pur'),
     path('add_cat', views.add_cat, name='add_cat'),
       

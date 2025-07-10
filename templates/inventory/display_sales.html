@@ -104,12 +104,13 @@
 </div>
 
 
-
 <div class="table-responsive">
   <!-- Total Profit -->
   <div class="mb-3">
-    <h5>Total Profit: <span class="text-success">₹{{ total_profit }}</span></h5>
+    <h5>Total Profit: <span class="text-success">₹{{ total_profit }}</span>  Total Loss: <span class="text-success">₹{{ total_loss }}</span></h5>
+
   </div>
+
 
   <table class="table datanew">
     <thead>
@@ -124,6 +125,7 @@
         <th>Quantity Sold</th>
         <th>Selling Price</th>
         <th>Profit</th>
+        <th>Loss</th>
         <th>Sale Date</th>
         <th>Action</th>
       </tr>
@@ -141,12 +143,13 @@
         <td>{{ sale.quantity_sold }}</td>
         <td>{{ sale.selling_price }}</td>
         <td>{{ sale.profit }}</td>
+        <td>{{ sale.loss }}</td>
         <td>{{ sale.sale_date|date:"Y-m-d H:i" }}</td>
         <td>
-          <a class="me-3" href="">
+          <a class="me-3" href="{% url 'edit_sale' sale.id %}">
             <img src="{% static 'assets/img/icons/edit.svg' %}" alt="edit">
           </a>
-          <a class="confirm-text" href="">
+          <a class="confirm-text" href="{% url 'delete_sale' sale.id %}">
             <img src="{% static 'assets/img/icons/delete.svg' %}" alt="delete">
           </a>
         </td>
@@ -159,9 +162,6 @@
     </tbody>
   </table>
 </div>
-
-
-
 
 
 </div>

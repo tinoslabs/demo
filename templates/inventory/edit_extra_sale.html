@@ -1,0 +1,66 @@
+
+{% extends "inventory/base.html" %}
+{% load static %}
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="page-wrapper">
+        <div class="content">
+            <div class="page-header">
+                <div class="page-title">
+                    <h4>Edit Extra Sale</h4>
+                    <h6>Modify sale entry</h6>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+
+                        <!-- Product -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Product Name</label>
+                                <input type="text" name="product" value="{{ form.product.value }}" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <!-- Quantity -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Quantity Sold</label>
+                                <input type="number" name="quantity_sold" value="{{ form.quantity_sold.value }}" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <!-- Cost Price -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input type="number" name="price" value="{{ form.price.value }}" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <!-- Selling Price -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Selling Price</label>
+                                <input type="number" name="selling_price" value="{{ form.selling_price.value }}" step="0.01" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 mt-3">
+                            <button type="submit" class="btn btn-submit me-2">Update</button>
+                            <a href="{% url 'display_extra_profit' %}" class="btn btn-cancel">Cancel</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+{% endblock %}
